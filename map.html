@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fleet Dispatch</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="dijkstra.js"></script>
+  <script src="state.js"></script>
+  <script src="steps.js"></script>
+  <script src="traffic.js"></script>
+</head>
+<body>
+
+<div id="map"></div>
+
+<aside id="panel">
+  <header class="panel-head">
+    <h1>Fleet Dispatch</h1>
+    <p>3 agents, 5 restaurants, 5 drop locations</p>
+  </header>
+
+  <section class="card" id="newOrderCard">
+    <h2>New order <span id="orderCount" class="count"></span></h2>
+    <label for="pickupSelect">Pickup restaurant</label>
+    <select id="pickupSelect">
+      <option value="">Choose a restaurant</option>
+    </select>
+
+    <label for="dropSelect">Drop location</label>
+    <select id="dropSelect">
+      <option value="">Choose a destination</option>
+    </select>
+
+    <button id="startBtn" class="primary" disabled>Place order</button>
+    <p id="startHint" class="hint">Choose a restaurant and a drop location.</p>
+  </section>
+
+  <section class="card controls" id="controlsCard">
+    <div class="nav-row">
+      <button id="prevBtn" class="secondary" disabled>Prev</button>
+      <span id="stepLabel">Step 0</span>
+      <button id="nextBtn" class="secondary" disabled>Next</button>
+    </div>
+    <label for="trafficAgent">Traffic ahead of</label>
+    <select id="trafficAgent" disabled>
+      <option value="">No agent on the road</option>
+    </select>
+    <div class="action-row">
+      <button id="trafficBtn" class="danger" disabled title="Needs an active agent with a road ahead">Simulate traffic</button>
+      <button id="resetBtn" class="ghost">Reset all</button>
+    </div>
+  </section>
+
+  <section class="card" id="agentsCard">
+    <h2>Agents</h2>
+    <ul id="agentList"></ul>
+  </section>
+
+  <section class="card" id="queueCard">
+    <h2>Waiting orders</h2>
+    <ol id="queueList"></ol>
+    <p id="queueEmpty" class="empty">No orders waiting.</p>
+  </section>
+
+  <section class="card" id="ordersCard">
+    <h2>Orders</h2>
+    <div id="orderList"></div>
+    <p id="ordersEmpty" class="empty">No orders yet. Place one above.</p>
+  </section>
+
+  <section class="card log-card" id="logCard">
+    <h2>Event log</h2>
+    <div id="eventLog"></div>
+  </section>
+</aside>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
